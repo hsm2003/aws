@@ -1,0 +1,64 @@
+#Upload A static website in EC2 server
+
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get install nginx
+cd ..
+cd ..
+cd var
+cd www
+sudo chmod 777 html 
+
+#Deploy a project from local machine to git and vice versa 
+
+git init
+git config --global user.email “your mail id”
+git add .
+git commit -m "done"
+git remote add origin <”remote repository url”>
+git push -f origin master
+
+#Deploy a project from github to EC2
+
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get install nginx
+curl -sL https://deb.nodesource.com/setup_16.x|sudo -E bash –
+sudo apt install nodejs
+git clone https://github.com/hsm2003/repo3.git
+cd repo3
+npm install
+node index.js  
+
+#Deploy a project from github to EC2 by creating new security group and user data
+
+#!/bin/bash
+apt-get update
+apt-get install -y nginx
+systemctl start nginx
+systemctl enable nginx
+apt-get install -y git
+curl -sl https://deb.nodesource.com/setup_18.x | sudo -E bash -
+apt-get install -y nodejs
+git clone https://github.com/hsm2003/r2.git
+cd r2
+npm install
+node index.js
+
+#Deploy and run project in AWS without using port
+
+pwd
+cd /
+pwd
+cd /etc/nginx/sites-available/
+sudo nano default
+
+location / {
+                proxy_pass http://localhost:4000;
+                proxy_http_version 1.1;
+                proxy_set_header Upgrade $http_upgrade;
+                proxy_set_header Connection 'Upgrade'; 
+                proxy_set_header Host $host;
+                proxy_cache_bypass $http_upgrade;
+        }  
+sudo systemctl restart nginx   
